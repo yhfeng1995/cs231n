@@ -16,4 +16,4 @@ Spring 2017 Assignments<br>
 * Q3: Dropout `--not yet`
 * Q4: Convolutional Networks `--not yet`
 * Q5: PyTorch / TensorFlow on CIFAR-10 `--not yet`
-* Q5: Do something extra! (up to +10 points) `--not yet`
+* Q5: Do something extra! `--not yet`
