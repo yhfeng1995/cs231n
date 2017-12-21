@@ -1,0 +1,6 @@
+Could not find a version that satisfies the requirement requirements.txt
+Remove site = 0.0.1 from requirements.txt
+
+报错 failed building wheel for gnureadline
+依赖包未安装好
+sudo apt-get install libncurses5-dev libffi-dev
