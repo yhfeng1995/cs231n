@@ -11,7 +11,7 @@ Spring 2017 Assignments<br>
 * Q5: Cool Bonus: Do something extra! `--not yet`
 ## Assignment 2:
 [Homework Introduction](http://cs231n.github.io/assignments2017/assignment2/)
-* Q1: Fully-connected Neural Network `--not yet`
+* Q1: Fully-connected Neural Network `--completed`
 * Q2: Batch Normalization `--not yet`
 * Q3: Dropout `--not yet`
 * Q4: Convolutional Networks `--not yet`
