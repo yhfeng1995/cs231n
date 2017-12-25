@@ -205,8 +205,8 @@ class FullyConnectedNet(object):
             # gamma -> scale parameter
             # bate -> shift parameter
             for i in range(1, self.num_layers):
-                self.params['gamma{}'.format(i)] = np.ones((input_dim, hidden_dims[i-1]))
-                self.params['bate{}'.format(i)] = np.zeros((input_dim, hidden_dims[i-1]))
+                self.params['gamma{}'.format(i)] = np.ones(hidden_dims[i-1])
+                self.params['beta{}'.format(i)] = np.zeros(hidden_dims[i-1])
 
         ############################################################################
         #                             END OF YOUR CODE                             #
@@ -268,6 +268,7 @@ class FullyConnectedNet(object):
 
         cachelist_z = []
         cachelist_a = []
+        cachelist_bn = []
         input = X
         for i in range(1, self.num_layers):
             # 1. affine layer
@@ -276,7 +277,13 @@ class FullyConnectedNet(object):
 
             # TODO: 2. batch normalization
             if self.use_batchnorm:
-                pass
+                z, cache_bn = batchnorm_forward(
+                    x=z,
+                    gamma=self.params['gamma{}'.format(i)],
+                    beta=self.params['beta{}'.format(i)],
+                    bn_param=self.bn_params[i-1]
+                )
+                cachelist_bn.append(cache_bn)
 
             # 3. relu layer
             a, cache_a = relu_forward(z)
@@ -323,7 +330,10 @@ class FullyConnectedNet(object):
 
         # last layer does not contain relu layer
         da, dw, db = affine_backward(ds, cachelist_z[-1])
-        grads['W{}'.format(self.num_layers)] = dw + self.reg*self.params['W{}'.format(self.num_layers)]
+        # don't need regularization if use batch normalization
+        if not self.use_batchnorm:
+            dw += self.reg*self.params['W{}'.format(self.num_layers)]
+        grads['W{}'.format(self.num_layers)] = dw
         grads['b{}'.format(self.num_layers)] = db
 
         for i in range(self.num_layers-1, 0, -1):
@@ -336,12 +346,16 @@ class FullyConnectedNet(object):
 
             # TODO: 3. batch normalization layer backward
             if self.use_batchnorm:
-                pass
+                dz, dgamma, dbeta = batchnorm_backward(dz, cachelist_bn[i-1])
+                grads['gamma{}'.format(i)] = dgamma
+                grads['beta{}'.format(i)] = dbeta
 
             # 4. affine backward
             da, dw, db = affine_backward(dz, cachelist_z[i-1])
-
-            grads['W{}'.format(i)] = dw + self.reg*self.params['W{}'.format(i)]
+            # don't need regularization if use batch normalization
+            if not self.use_batchnorm:
+                dw += self.reg*self.params['W{}'.format(i)]
+            grads['W{}'.format(i)] = dw
             grads['b{}'.format(i)] = db
 
         ############################################################################
