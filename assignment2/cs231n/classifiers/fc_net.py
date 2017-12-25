@@ -269,6 +269,7 @@ class FullyConnectedNet(object):
         cachelist_z = []
         cachelist_a = []
         cachelist_bn = []
+        cachelist_dropout = []
         input = X
         for i in range(1, self.num_layers):
             # 1. affine layer
@@ -291,7 +292,8 @@ class FullyConnectedNet(object):
 
             # TODO: 4. dropout
             if self.use_dropout:
-                pass
+                a, cache_dropout = dropout_forward(x=a, dropout_param=self.dropout_param)
+                cachelist_dropout.append(cache_dropout)
 
             input = a.copy()
 
@@ -339,7 +341,7 @@ class FullyConnectedNet(object):
         for i in range(self.num_layers-1, 0, -1):
             # TODO: 1. dropout layer backward
             if self.use_dropout:
-                pass
+                da = dropout_backward(da, cachelist_dropout[i-1])
 
             # 2. relu backward
             dz = relu_backward(da, cachelist_a[i-1])
