@@ -13,7 +13,7 @@ Spring 2017 Assignments<br>
 [Homework Introduction](http://cs231n.github.io/assignments2017/assignment2/)
 * Q1: Fully-connected Neural Network `--completed`
 * Q2: Batch Normalization `--completed`
-* Q3: Dropout `--not yet`
+* Q3: Dropout `--completed`
 * Q4: Convolutional Networks `--not yet`
 * Q5: PyTorch / TensorFlow on CIFAR-10 `--not yet`
 * Q5: Do something extra! `--not yet`
