@@ -17,3 +17,9 @@ Spring 2017 Assignments<br>
 * Q4: Convolutional Networks `--completed`
 * Q5: PyTorch / TensorFlow on CIFAR-10 `--not yet`
 * Q5: Do something extra! `--not yet`
+## Assignments 3:
+* Q1: Image Captioning with Vanilla RNNs `--not yet`
+* Q2: Image Captioning with LSTMs `--not yet`
+* Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images `--not yet`
+* Q4: Style Transfer `--not yet`
+* Q5: Generative Adversarial Networks `--not yet`
