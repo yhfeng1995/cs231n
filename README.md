@@ -14,6 +14,6 @@ Spring 2017 Assignments<br>
 * Q1: Fully-connected Neural Network `--completed`
 * Q2: Batch Normalization `--completed`
 * Q3: Dropout `--completed`
-* Q4: Convolutional Networks `--not yet`
+* Q4: Convolutional Networks `--completed`
 * Q5: PyTorch / TensorFlow on CIFAR-10 `--not yet`
 * Q5: Do something extra! `--not yet`
