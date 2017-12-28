@@ -18,6 +18,7 @@ Spring 2017 Assignments<br>
 * Q5: PyTorch / TensorFlow on CIFAR-10 `--not yet`
 * Q5: Do something extra! `--not yet`
 ## Assignments 3:
+[Homework Introduction](http://cs231n.github.io/assignments2017/assignment3/)
 * Q1: Image Captioning with Vanilla RNNs `--not yet`
 * Q2: Image Captioning with LSTMs `--not yet`
 * Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images `--not yet`
