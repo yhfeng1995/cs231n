@@ -138,10 +138,13 @@ class CaptioningRNN(object):
         # gradients for self.params[k].                                            #
         ############################################################################
 
+        # initial
+        dW_proj, db_proj, dW_embed, dWx, dWh, db, dW_vocab, db_vocab = [None for i in range(8)]
+        h0 = features.dot(W_proj) + b_proj
+        x, cache_x = word_embedding_forward(captions_in, W_embed)
+
         if self.cell_type == 'rnn':
             # RNN froward
-            h0 = features.dot(W_proj)+b_proj
-            x, cache_x = word_embedding_forward(captions_in, W_embed)
             h, cache_h = rnn_forward(x, h0, Wx, Wh, b)
             scores, cache_s = temporal_affine_forward(h, W_vocab, b_vocab)
             loss, ds = temporal_softmax_loss(scores, captions_out, mask)
@@ -153,18 +156,28 @@ class CaptioningRNN(object):
             dW_proj = features.T.dot(dh0)
             db_proj = np.sum(dh0, axis=0)
 
-            # output
-            grads['W_vocab'] = dW_vocab
-            grads['b_vocab'] = db_vocab
-            grads['Wx'] = dWx
-            grads['Wh'] = dWh
-            grads['b'] = db
-            grads['W_embed'] = dW_embed
-            grads['W_proj'] = dW_proj
-            grads['b_proj'] = db_proj
-
         elif self.cell_type == 'lstm':
-            pass
+            # LSTM forward
+            h, cache_h = lstm_forward(x, h0, Wx, Wh, b)
+            scores, cache_s = temporal_affine_forward(h, W_vocab,b_vocab)
+            loss, ds = temporal_softmax_loss(scores, captions_out, mask)
+
+            # LSTM backward
+            dh, dW_vocab, db_vocab = temporal_affine_backward(ds, cache_s)
+            dx, dh0, dWx, dWh, db = lstm_backward(dh, cache_h)
+            dW_embed = word_embedding_backward(dx, cache_x)
+            dW_proj = features.T.dot(dh0)
+            db_proj = np.sum(dh0, axis=0)
+
+        # output
+        grads['W_vocab'] = dW_vocab
+        grads['b_vocab'] = db_vocab
+        grads['Wx'] = dWx
+        grads['Wh'] = dWh
+        grads['b'] = db
+        grads['W_embed'] = dW_embed
+        grads['W_proj'] = dW_proj
+        grads['b_proj'] = db_proj
 
         ############################################################################
         #                             END OF YOUR CODE                             #
@@ -229,13 +242,24 @@ class CaptioningRNN(object):
         ###########################################################################
 
         prev_h = features.dot(W_proj)+b_proj
+        prev_c = np.zeros(prev_h.shape)
         captions[:, 0] = self._start*np.ones(N, dtype=np.int32)
-        for t in range(max_length-1):
-            x = W_embed[captions[:, t].reshape(N), :]
-            h, _ = rnn_step_forward(x, prev_h, Wx, Wh, b)
-            scores = h.dot(W_vocab) + b_vocab
-            prev_h = h
-            captions[:, t+1] = np.argmax(scores, axis=1)
+
+        if self.cell_type == 'rnn':
+            for t in range(max_length - 1):
+                x = W_embed[captions[:, t].reshape(N), :]
+                h, _ = rnn_step_forward(x, prev_h, Wx, Wh, b)
+                scores = h.dot(W_vocab) + b_vocab
+                prev_h = h
+                captions[:, t + 1] = np.argmax(scores, axis=1)
+        elif self.cell_type == 'lstm':
+            for t in range(max_length-1):
+                x = W_embed[captions[:, t].reshape(N), :]
+                h, c, _ = lstm_step_forward(x, prev_h, prev_c, Wx, Wh, b)
+                scores = h.dot(W_vocab) + b_vocab
+                captions[:, t+1] = np.argmax(scores, axis=1)
+                prev_h = h
+                prev_c = c
 
         ############################################################################
         #                             END OF YOUR CODE                             #
