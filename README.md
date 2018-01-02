@@ -15,12 +15,12 @@ Spring 2017 Assignments<br>
 * Q2: Batch Normalization `--completed`
 * Q3: Dropout `--completed`
 * Q4: Convolutional Networks `--completed`
-* Q5: PyTorch / TensorFlow on CIFAR-10 `--not yet`
+* Q5: PyTorch / TensorFlow on CIFAR-10 `-complete TensorFlow`
 * Q5: Do something extra! `--not yet`
 ## Assignments 3:
 [Homework Introduction](http://cs231n.github.io/assignments2017/assignment3/)
-* Q1: Image Captioning with Vanilla RNNs `--not yet`
-* Q2: Image Captioning with LSTMs `--not yet`
+* Q1: Image Captioning with Vanilla RNNs `-completed`
+* Q2: Image Captioning with LSTMs `--completed`
 * Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images `--not yet`
 * Q4: Style Transfer `--not yet`
 * Q5: Generative Adversarial Networks `--not yet`
