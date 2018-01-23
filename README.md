@@ -21,6 +21,6 @@ Spring 2017 Assignments<br>
 [Homework Introduction](http://cs231n.github.io/assignments2017/assignment3/)
 * Q1: Image Captioning with Vanilla RNNs `-completed`
 * Q2: Image Captioning with LSTMs `--completed`
-* Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images `--not yet`
-* Q4: Style Transfer `--not yet`
-* Q5: Generative Adversarial Networks `--not yet`
+* Q3: Network Visualization: Saliency maps, Class Visualization, and Fooling Images `--completed`
+* Q4: Style Transfer `--completed`
+* Q5: Generative Adversarial Networks `--completed`
